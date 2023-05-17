@@ -1,3 +1,5 @@
+package com.example.vkrapp;
+
 import android.content.Context;
 import android.content.ContentValues;
 import android.database.SQLException;
@@ -21,12 +23,12 @@ public class DBAdapter {
     }
 
     private static class DatabaseHelper extends SQLiteOpenHelper {
-    DatabaseHelper(Context context) {
+        DatabaseHelper(Context context) {
             super(context, databaseName, null, databaseVersion);
         }
 
 
-            public void onCreate(SQLiteDatabase db){
+        public void onCreate(SQLiteDatabase db){
             try{
 
             }
