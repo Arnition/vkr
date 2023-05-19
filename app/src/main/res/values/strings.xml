@@ -3,4 +3,23 @@
     <string name="feed_text">Рацион питания</string>
     <string name="walk_text">Выгул</string>
     <string name="logo_text">My Pet</string>
+
+    <string name="animal_text">Ваш домашний \nпитомец</string>
+    <string name="cast_text">Кастрация:</string>
+    <string name="cast_yes">Да</string>
+    <string name="cast_no">Нет</string>
+    <string name="ves">Вес(кг):</string>
+    <string name="activity">Стадия жизни:</string>
+    <string name="cal_text">Калорийность корма \nна 100г продукта:</string>
+
+
+    <string-array name="activity_arr">
+        <item>Взрослый</item>
+        <item>Активный взрослый</item>
+        <item>Снижение веса</item>
+        <item>Болеет</item>
+        <item>Беременность</item>
+        <item>Возраст 4-12 месяцев</item>
+        <item>Возраст > 7 лет</item>
+    </string-array>
 </resources>

@@ -30,7 +30,7 @@ public class DBAdapter {
 
         public void onCreate(SQLiteDatabase db){
             try{
-
+                //db.execSQL("CREATE TABLE IF NOT EXISTS");
             }
             catch (SQLException e){
                 e.printStackTrace();
