@@ -55,7 +55,7 @@ public class walk_activity extends AppCompatActivity implements UserLocationObje
         setContentView(R.layout.activity_walk);
         mapview = (MapView) findViewById(R.id.mapview);
         mapview.getMap().move(
-                new CameraPosition(new Point(47.235586, 39.713120), 11.0f, 0.0f, 0.0f),
+                new CameraPosition(new Point(47.235586, 39.713120), 15.0f, 0.0f, 0.0f),
                 new Animation(Animation.Type.SMOOTH, 3), null);
 
         mapKit = MapKitFactory.getInstance();
@@ -87,34 +87,34 @@ public class walk_activity extends AppCompatActivity implements UserLocationObje
         }
     }
 
-        public void onObjectAdded(UserLocationView userLocationView) {
-        userLocationLayer.setAnchor(
-                new PointF((float)(mapview.getWidth() * 0.5), (float)(mapview.getHeight() * 0.5)),
-                new PointF((float)(mapview.getWidth() * 0.5), (float)(mapview.getHeight() * 0.83)));
-
-        userLocationView.getArrow().setIcon(ImageProvider.fromResource(
-                this, R.drawable.navigation));
-
-        CompositeIcon pinIcon = userLocationView.getPin().useCompositeIcon();
-
-        ((CompositeIcon) pinIcon).setIcon(
-                "icon",
-                ImageProvider.fromResource(this, R.drawable.navigation),
-                new IconStyle().setAnchor(new PointF(0f, 0f))
-                        .setRotationType(RotationType.ROTATE)
-                        .setZIndex(0f)
-                        .setScale(1f)
-        );
-
-        pinIcon.setIcon(
-                "pin",
-                ImageProvider.fromResource(this, R.drawable.navigation),
-                new IconStyle().setAnchor(new PointF(0.5f, 0.5f))
-                        .setRotationType(RotationType.ROTATE)
-                        .setZIndex(1f)
-                        .setScale(0.5f)
-        );
-    }
+//        public void onObjectAdded(UserLocationView userLocationView) {
+//        userLocationLayer.setAnchor(
+//                new PointF((float)(mapview.getWidth() * 0.5), (float)(mapview.getHeight() * 0.5)),
+//                new PointF((float)(mapview.getWidth() * 0.5), (float)(mapview.getHeight() * 0.83)));
+//
+//        userLocationView.getArrow().setIcon(ImageProvider.fromResource(
+//                this, R.drawable.navigation));
+//
+//        CompositeIcon pinIcon = userLocationView.getPin().useCompositeIcon();
+//
+//        ((CompositeIcon) pinIcon).setIcon(
+//                "icon",
+//                ImageProvider.fromResource(this, R.drawable.navigation),
+//                new IconStyle().setAnchor(new PointF(0f, 0f))
+//                        .setRotationType(RotationType.ROTATE)
+//                        .setZIndex(0f)
+//                        .setScale(1f)
+//        );
+//
+//        pinIcon.setIcon(
+//                "pin",
+//                ImageProvider.fromResource(this, R.drawable.navigation),
+//                new IconStyle().setAnchor(new PointF(0.5f, 0.5f))
+//                        .setRotationType(RotationType.ROTATE)
+//                        .setZIndex(1f)
+//                        .setScale(0.5f)
+//        );
+//    }
 
 
     @Override
@@ -129,6 +129,11 @@ public class walk_activity extends AppCompatActivity implements UserLocationObje
         super.onStart();
         MapKitFactory.getInstance().onStart();
         mapview.onStart();
+    }
+
+    @Override
+    public void onObjectAdded(@NonNull UserLocationView userLocationView) {
+
     }
 
     public void onObjectRemoved(UserLocationView view) {

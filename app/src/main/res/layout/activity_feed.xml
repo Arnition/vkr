@@ -106,7 +106,7 @@
         />
 
     <EditText
-        android:id="@+id/editTextNumber5"
+        android:id="@+id/kg"
         style="@style/Widget.AppCompat.AutoCompleteTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -130,7 +130,7 @@
         android:textSize="22sp"
         android:textStyle="bold"
         android:layout_marginLeft="15dp"
-        android:layout_below="@id/editTextNumber5"/>
+        android:layout_below="@id/kg"/>
 
 
     <TextView
@@ -150,7 +150,7 @@
         android:layout_below="@id/spinner"/>
 
     <EditText
-        android:id="@+id/editTextNumber4"
+        android:id="@+id/calorie"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -158,5 +158,27 @@
         android:layout_marginLeft="15dp"
         android:layout_below="@id/textView9"
         android:inputType="number" />
+
+    <Button
+        android:id="@+id/all"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/calorie"
+        android:backgroundTint="#9699DC"
+        android:textSize="18sp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="10dp"
+        android:text="Рассчитать" />
+
+    <TextView
+        android:id="@+id/allvivod"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/calorie"
+        android:layout_marginLeft="180dp"
+        android:layout_marginTop="16dp"
+        android:text=" "
+        android:textColor="@color/black"
+        android:textSize="22sp" />
 
 </RelativeLayout>

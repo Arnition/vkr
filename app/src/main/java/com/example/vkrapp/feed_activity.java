@@ -5,23 +5,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.facebook.stetho.Stetho;
-import com.facebook.stetho.okhttp3.StethoInterceptor;
-
-import java.util.List;
 
 
 public class feed_activity extends AppCompatActivity {
-
     ListView userList;
     TextView header;
     DatabaseHelper databaseHelper;
@@ -32,7 +26,6 @@ public class feed_activity extends AppCompatActivity {
     Spinner myspinner;
     Spinner myspinnerTest;
     ArrayAdapter<CharSequence> adapter;
-    ArrayAdapter<CharSequence> adapter2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +40,56 @@ public class feed_activity extends AppCompatActivity {
         databaseHelper = new DatabaseHelper(getApplicationContext());
 
         myspinnerTest = (Spinner) findViewById(R.id.spnTest);
+
+//        final int RB1_ID = 1;//first radio button id
+//        final int RB2_ID = 2;//second radio button id
+//
+//        RadioButton rb1 = (RadioButton)findViewById(R.id.radioButton);
+//        RadioButton rb2 = (RadioButton)findViewById(R.id.radioButton2);
+//        rb1.setId(RB1_ID);
+//        rb2.setId(RB2_ID);
+
+//
+//
+//        RadioGroup myRadioGroup = findViewById(R.id.rad);
+//        int radId = myRadioGroup.getCheckedRadioButtonId();
+//
+//        int state = (int) myspinner.getSelectedItemId();
+//        int state_osn = (int) myspinnerTest.getSelectedItemId();
+
+        EditText kg = findViewById(R.id.kg);
+        EditText calorie = findViewById(R.id.calorie);
+
+        Button btn = findViewById(R.id.all);
+        TextView txt = findViewById(R.id.allvivod);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String str = (kg.getText().toString().trim());
+                String str2 = (calorie.getText().toString().trim());
+                int energy;
+                int kof;
+                int result;
+                energy = 30 * Integer.parseInt(str) + 70;
+                kof = (int) (energy * 1.2);
+                result = Integer.parseInt(str2) * 100/kof;
+                txt.setText(String.valueOf(result) + "г");
+            }
+        });
     }
+
+    //                if (state == 0 && state_osn == 0 && radId == R.id.radioButton .equals("Малоподвижный образ жизни")) {
+//                    energy = 30 * str + 70;
+//                    kof = (int) (energy * 1.2);
+//                    result = str2 / kof;
+//                    txt.setText(String.valueOf(result));
+//                } else if (state == 0 && state_osn == 0 && radId == R.id.radioButton2) {
+//                    energy = 30 * str + 70;
+//                    kof = (int) (energy * 1.4);
+//                    result = str2 / kof;
+//                    txt.setText(String.valueOf(result));
+//                }
+
     @Override
     public void onResume() {
         super.onResume();
