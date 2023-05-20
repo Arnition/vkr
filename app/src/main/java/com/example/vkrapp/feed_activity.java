@@ -108,7 +108,7 @@ public class feed_activity extends AppCompatActivity {
         //получаем данные из бд в виде курсора
         userCursor =  db.rawQuery("select * from "+ DatabaseHelper.TABLE_ANIMAL, null);
         // определяем, какие столбцы из курсора будут выводиться в ListView
-        String[] headers = new String[] {DatabaseHelper.COLUMN_NAME};
+        String[] headers = new String[] {DatabaseHelper.COLUMN_NAME_ANIMAL};
         // создаем адаптер, передаем в него курсор
         userAdapter = new SimpleCursorAdapter(this, android.R.layout.simple_spinner_item,
                 userCursor, headers, new int[]{android.R.id.text1}, 0);
