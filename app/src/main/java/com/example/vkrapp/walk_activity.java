@@ -10,6 +10,8 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.PointF;
 import android.os.Bundle;
+import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gun0912.tedpermission.PermissionListener;
@@ -23,6 +25,10 @@ import com.yandex.mapkit.map.CameraListener;
 import com.yandex.mapkit.map.CameraPosition;
 import com.yandex.mapkit.map.CompositeIcon;
 import com.yandex.mapkit.map.IconStyle;
+import com.yandex.mapkit.map.MapObject;
+import com.yandex.mapkit.map.MapObjectCollection;
+import com.yandex.mapkit.map.MapObjectTapListener;
+import com.yandex.mapkit.map.PlacemarkMapObject;
 import com.yandex.mapkit.map.RotationType;
 import com.yandex.mapkit.mapview.MapView;
 import com.yandex.mapkit.traffic.TrafficLayer;
@@ -30,6 +36,7 @@ import com.yandex.mapkit.user_location.UserLocationLayer;
 import com.yandex.mapkit.user_location.UserLocationObjectListener;
 import com.yandex.mapkit.user_location.UserLocationView;
 import com.yandex.runtime.image.ImageProvider;
+import com.yandex.runtime.ui_view.ViewProvider;
 
 import android.Manifest;
 
@@ -39,6 +46,7 @@ public class walk_activity extends AppCompatActivity implements UserLocationObje
 
     private MapView mapview;
     private MapKit mapKit;
+    private MapObjectCollection mapObjects;
     private TrafficLayer traffic;
     private UserLocationLayer userLocationLayer;
 //    private int REQUEST_CODE_PERMISSION_INTERNET = 1;
@@ -55,7 +63,7 @@ public class walk_activity extends AppCompatActivity implements UserLocationObje
         setContentView(R.layout.activity_walk);
         mapview = (MapView) findViewById(R.id.mapview);
         mapview.getMap().move(
-                new CameraPosition(new Point(47.235586, 39.713120), 15.0f, 0.0f, 0.0f),
+                new CameraPosition(new Point(47.235586, 39.713120), 11.0f, 0.0f, 0.0f),
                 new Animation(Animation.Type.SMOOTH, 3), null);
 
         mapKit = MapKitFactory.getInstance();
@@ -67,7 +75,31 @@ public class walk_activity extends AppCompatActivity implements UserLocationObje
         userLocationLayer.setHeadingEnabled(true);
         userLocationLayer.setObjectListener((UserLocationObjectListener) this);
 
+        mapObjects = mapview.getMap().getMapObjects();
+        addPlacemark();
     }
+
+
+    private void addPlacemark() {
+        double[][] coordinates = {{47.242103, 39.709871}, {47.250632, 39.708042}, {47.220548, 39.670543}, {47.211454, 39.678658}, {47.210169, 39.646254}, {47.212971, 39.630883},{47.259561, 39.682201},
+                {47.210169, 39.646254}, {47.233572, 39.590665}, {47.269521, 39.856100}, {47.287760, 39.704755}, {47.259568, 39.702485},{47.240027, 39.701218}};
+        for (int i = 0; i < coordinates.length; i++){
+            PlacemarkMapObject viewPlacemark = mapObjects.addPlacemark(
+                    new Point(coordinates[i][0], coordinates[i][1]));  // вид метки, здесь мы используем CustomPlacemarkView, свой класс вида меток
+            viewPlacemark.setIcon(ImageProvider.fromResource(this, R.drawable.icon));
+        }
+    }
+
+//        double[][] coordinates = {{55.753559, 37.609218}, {59.939125, 30.315822}, {55.796127, 49.106405}};
+//        for (int i = 0; i < coordinates.length; i++) {
+//            final TextView textView = new TextView(this);
+//            ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+//            textView.setTextColor(Color.RED);
+//            textView.setLayoutParams(params);
+//            ViewProvider viewProvider = new ViewProvider(textView);
+//            PlacemarkMapObject viewPlacemark = mapObjects.addPlacemark(new Point(coordinates[i][1],
+//            coordinates[i][0]),viewProvider);
+//        }
 
   private void requestPermission(){
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&

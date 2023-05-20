@@ -73,7 +73,7 @@ public class feed_activity extends AppCompatActivity {
                 energy = 30 * Integer.parseInt(str) + 70;
                 kof = (int) (energy * 1.2);
                 result = Integer.parseInt(str2) * 100/kof;
-                txt.setText(String.valueOf(result) + "г");
+                txt.setText(String.valueOf(result) + "г в день \nнужно кушать вашему питомцу!");
             }
         });
     }
