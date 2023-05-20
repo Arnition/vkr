@@ -65,15 +65,24 @@ public class feed_activity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String str = (kg.getText().toString().trim());
-                String str2 = (calorie.getText().toString().trim());
-                int energy;
-                int kof;
-                int result;
-                energy = 30 * Integer.parseInt(str) + 70;
-                kof = (int) (energy * 1.2);
-                result = Integer.parseInt(str2) * 100/kof;
-                txt.setText(String.valueOf(result) + "г в день \nнужно кушать вашему питомцу!");
+                String animal_type = null;
+
+                Cursor cursor = userAdapter.getCursor();
+                int columnIndex = cursor.getColumnIndex("name");
+
+                if (columnIndex != -1) {
+                    animal_type = cursor.getString(columnIndex);
+                }
+
+                double weight = Double.parseDouble(kg.getText().toString().trim());
+                String life_stage = myspinner.getSelectedItem().toString();
+                double calorie_value = Double.parseDouble(calorie.getText().toString().trim());
+
+                Animal animal = new Animal(animal_type, life_stage, weight, calorie_value);
+                int result = CalcLogic.getCoefficient(animal);
+
+                txt.setText(result + "г в день \nнужно кушать вашему питомцу!");
+
             }
         });
     }
@@ -97,7 +106,7 @@ public class feed_activity extends AppCompatActivity {
         db = databaseHelper.getReadableDatabase();
 
         //получаем данные из бд в виде курсора
-        userCursor =  db.rawQuery("select * from "+ DatabaseHelper.TABLE, null);
+        userCursor =  db.rawQuery("select * from "+ DatabaseHelper.TABLE_ANIMAL, null);
         // определяем, какие столбцы из курсора будут выводиться в ListView
         String[] headers = new String[] {DatabaseHelper.COLUMN_NAME};
         // создаем адаптер, передаем в него курсор

@@ -5,9 +5,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.content.Context;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
-    private static final String DATABASE_NAME = "testanimal.db"; // название бд
+    private static final String DATABASE_NAME = "animal_new.db"; // название бд
     private static final int SCHEMA = 1; // версия базы данных
-    static final String TABLE = "animal_test"; // название таблицы в бд
+    static final String TABLE_ANIMAL = "animal_test"; // название таблицы в бд
     // названия столбцов
     public static final String COLUMN_ID = "_id";
     public static final String COLUMN_NAME = "name";
@@ -36,7 +36,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion,  int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS "+TABLE);
+       // db.execSQL("DROP TABLE IF EXISTS "+TABLE);
         onCreate(db);
     }
 }
