@@ -11,15 +11,4 @@
     <string name="ves">Вес(кг):</string>
     <string name="activity">Стадия жизни:</string>
     <string name="cal_text">Калорийность корма \nна 100г продукта:</string>
-
-
-    <string-array name="activity_arr">
-        <item>Взрослый</item>
-        <item>Активный взрослый</item>
-        <item>Снижение веса</item>
-        <item>Болеет</item>
-        <item>Беременность</item>
-        <item>Возраст 4-12 месяцев</item>
-        <item>Возраст > 7 лет</item>
-    </string-array>
 </resources>

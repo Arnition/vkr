@@ -1,10 +1,10 @@
 package com.example.vkrapp;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -15,12 +15,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void startFeedActivity(View view){
-        Intent intent = new Intent(this, feed_activity.class);
+        Intent intent = new Intent(this, TestActivity.class);
+//        Intent intent = new Intent(this, FeedActivity.class);
         startActivity(intent);
     }
 
     public void startWalkActivity(View view){
-        Intent intent = new Intent(this, walk_activity.class);
+        Intent intent = new Intent(this, WalkActivity.class);
         startActivity(intent);
     }
 }
