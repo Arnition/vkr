@@ -18,10 +18,11 @@ public class Helper {
             return false;
         }
 
-        return result > 0 && result < 200;
+        return result > 0 && result < 7000;
     }
 
     public static double parseData(EditText et) {
-        return Double.parseDouble(et.getText().toString().trim());
+        String value = et.getText().toString().trim();
+        return (value.isEmpty())? 0 : Double.valueOf(value);
     }
 }

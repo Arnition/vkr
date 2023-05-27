@@ -5,10 +5,7 @@
     <string name="logo_text">My Pet</string>
 
     <string name="animal_text">Ваш домашний \nпитомец</string>
-    <string name="cast_text">Кастрация:</string>
-    <string name="cast_yes">Да</string>
-    <string name="cast_no">Нет</string>
-    <string name="ves">Вес(кг):</string>
-    <string name="activity">Стадия жизни:</string>
+    <string name="ves">Вес питомца(г):</string>
+    <string name="activity">Выберите стадию жизни или \nвид вашего питомца</string>
     <string name="cal_text">Калорийность корма \nна 100г продукта:</string>
 </resources>

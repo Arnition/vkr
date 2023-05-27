@@ -15,8 +15,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void startFeedActivity(View view){
-        Intent intent = new Intent(this, TestActivity.class);
-//        Intent intent = new Intent(this, FeedActivity.class);
+        Intent intent = new Intent(this, FeedActivity.class);
         startActivity(intent);
     }
 

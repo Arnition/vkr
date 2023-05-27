@@ -20,8 +20,9 @@ import java.util.List;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "database.db";
-    private static final int DATABASE_VERSION = 4;
+    private static final int DATABASE_VERSION = 16;
     private Context context;
+    private Cursor cursor;
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -39,10 +40,50 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
         context.deleteDatabase(DATABASE_NAME);
         copyDatabase();
+//        Caused by: java.lang.IllegalStateException: attempt to re-open an already-closed object: SQLiteDatabase: /data/user/0/com.example.vkrapp/databases/database.db
     }
 
     private Cursor getCursorFromSQL(String sql) {
         return this.getReadableDatabase().rawQuery(sql, null);
+    }
+
+    private void closeAfterRequest() {
+        cursor.close();
+        this.close();
+    }
+
+    private boolean checkDepend(String sql) {
+        boolean response = false;
+
+        cursor = getCursorFromSQL(sql);
+        if (cursor.moveToFirst()) {
+            response = cursor.getInt(0) == 1;
+        }
+
+        closeAfterRequest();
+        return response;
+    }
+
+    public boolean isDependKg(String animalType) {
+        return checkDepend("SELECT kg FROM animals WHERE name = \"" + animalType + "\";");
+    }
+
+    public boolean isDependWeight(String animalType) {
+        return checkDepend("SELECT weight FROM animals WHERE name = \"" + animalType + "\";");
+    }
+
+    public String getAnimalRecommendation(String animalType) {
+        String recommendation = "NULL STR";
+
+        String sql = "SELECT recommendation FROM animals WHERE name = \"" + animalType + "\";";
+        cursor = getCursorFromSQL(sql);
+
+        if (cursor.moveToFirst()) {
+            recommendation = cursor.getString(0);
+        }
+
+        closeAfterRequest();
+        return recommendation;
     }
 
     public List<String> getAnimalParamsByAnimalType(String animalType) {
@@ -53,8 +94,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         sql += "INNER JOIN animals_params ON animals_params.id = data.id_param ";
         sql += "WHERE animals.name = \"" + animalType + "\";";
 
-        Cursor cursor = getCursorFromSQL(sql);
-
+        cursor = getCursorFromSQL(sql);
         if (cursor.moveToFirst()) {
             do {
                 int columnIndex = cursor.getColumnIndex("name");
@@ -62,35 +102,53 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             } while (cursor.moveToNext());
         }
 
-        cursor.close();
-        this.close();
-
+        closeAfterRequest();
         return animalParams;
     }
 
-    public double getAnimalCoefficient(String animalType, String animalParams) {
+    private double getAnimalCoefficient(String sql) {
         double coefficient = 0;
 
+        cursor = getCursorFromSQL(sql);
+        if (cursor.moveToFirst()) {
+            coefficient = cursor.getDouble(0);
+        }
+
+        closeAfterRequest();
+        return coefficient;
+    }
+
+    public double getAnimalCoefficient(String animalType, String animalParams) {
         String sql = "SELECT data.coefficient FROM data ";
         sql += "INNER JOIN animals ON animals.id = data.id_animal ";
         sql += "INNER JOIN animals_params ON animals_params.id = data.id_param ";
         sql += "WHERE animals.name = \"" + animalType + "\" and ";
         sql += "animals_params.name = \"" + animalParams + "\";";
 
-        Cursor cursor = getCursorFromSQL(sql);
-        if (cursor.moveToFirst()) {
-            coefficient = cursor.getDouble(0);
-        }
+        return getAnimalCoefficient(sql);
+    }
 
-        cursor.close();
-        this.close();
 
-        return coefficient;
+    public double getDefaultAnimalCoefficient(String animalType) {
+        String sql = "SELECT defaultCoefficient FROM animals WHERE name = \"" + animalType + "\";";
+        return getAnimalCoefficient(sql);
+    }
+
+
+
+    public double getAnimalGrams(String animalType, String animalParams) {
+        String sql = "SELECT data.grams FROM data ";
+        sql += "INNER JOIN animals ON animals.id = data.id_animal ";
+        sql += "INNER JOIN animals_params ON animals_params.id = data.id_param ";
+        sql += "WHERE animals.name = \"" + animalType + "\" and ";
+        sql += "animals_params.name = \"" + animalParams + "\";";
+
+        return getAnimalCoefficient(sql);
     }
 
     public List<String> getAllAnimalsType() {
         List<String> animalsType = new ArrayList<>();
-        Cursor cursor = getCursorFromSQL("SELECT * FROM animals");
+        cursor = getCursorFromSQL("SELECT * FROM animals");
 
         if (cursor.moveToFirst()) {
             do {
@@ -99,15 +157,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             } while (cursor.moveToNext());
         }
 
-        cursor.close();
-        this.close();
-
+        closeAfterRequest();
         return animalsType;
     }
 
     public List<Point> getAllWalkPoints() {
         List<Point> walkPoints = new ArrayList<>();
-        Cursor cursor = getCursorFromSQL("SELECT * FROM walk_points");
+        cursor = getCursorFromSQL("SELECT * FROM walk_points");
 
         if (cursor.moveToFirst()) {
             do {
@@ -119,9 +175,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             } while (cursor.moveToNext());
         }
 
-        cursor.close();
-        this.close();
-
+        closeAfterRequest();
         return walkPoints;
     }
 
