@@ -3,7 +3,7 @@ package com.example.vkrapp.utils;
 import android.widget.EditText;
 
 public class Helper {
-
+    //проверка вводимых данных
     public static boolean isValidDataElement(EditText et) {
         if(et.getText().toString().isEmpty()) {
             return false;

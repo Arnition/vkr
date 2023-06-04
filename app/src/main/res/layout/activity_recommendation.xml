@@ -1,33 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/top"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="20dp"
-    android:paddingTop="20dp"
     android:paddingLeft="20dp"
-    android:paddingRight="20dp">
+    android:paddingTop="20dp"
+    android:paddingRight="20dp"
+    android:paddingBottom="20dp">
+
+    <ImageView
+        android:layout_width="500dp"
+        android:layout_height="40dp"
+        app:srcCompat="@drawable/back_for_feed">
+
+    </ImageView>
 
     <TextView
         android:id="@+id/animalTypeTextView"
         android:layout_width="match_parent"
         android:layout_height="40dp"
+        android:fontFamily="@font/open_sans_bold"
         android:text="header"
-        android:textSize="24sp"
-        android:textColor="@color/black"/>
+        android:textColor="@color/black"
+        android:textSize="24sp" />
 
     <ScrollView
+        android:id="@+id/Scroll"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/animalTypeTextView"
-        android:id="@+id/Scroll">
+        android:foregroundTint="#A381E1">
 
         <TextView
             android:id="@+id/recommendationTextView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:backgroundTint="#BAA6DF"
+            android:fontFamily="@font/open_sans_bold"
             android:text="Recommendation"
-            android:textSize="22sp"
-            android:textColor="@color/black"/>
+            android:textColor="@color/black"
+            android:textSize="20sp" />
     </ScrollView>
 
 </RelativeLayout>

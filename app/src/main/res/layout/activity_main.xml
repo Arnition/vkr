@@ -30,6 +30,7 @@
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="30sp"
+        android:fontFamily="@font/open_sans_bold"
         android:textStyle="bold" />
 
     <Button
@@ -41,11 +42,11 @@
         android:layout_marginTop="35sp"
         android:backgroundTint="#9699DC"
         android:onClick="startFeedActivity"
+        android:fontFamily="@font/open_sans_bold"
         android:text="@string/feed_text"
         android:textAlignment="center"
         android:textColor="@color/white"
-        android:textSize="20sp"
-        android:textStyle="bold" />
+        android:textSize="22sp"/>
 
     <Button
         android:id="@+id/button_walk"
@@ -55,11 +56,11 @@
         android:layout_marginHorizontal="70sp"
         android:layout_marginTop="35sp"
         android:backgroundTint="#9699DC"
+        android:fontFamily="@font/open_sans_bold"
         android:onClick="startWalkActivity"
         android:text="@string/walk_text"
         android:textAlignment="center"
         android:textColor="@color/white"
-        android:textSize="20sp"
-        android:textStyle="bold" />
+        android:textSize="22sp" />
 
 </RelativeLayout>

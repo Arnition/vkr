@@ -56,14 +56,12 @@ public class WalkActivity extends AppCompatActivity {
         initDepends();
     }
 
+    //маркеры, зум камеры
     private void initDepends() {
         mapView = findViewById(R.id.mapview);
         mapView.getMap().move(
                 new CameraPosition(new Point(47.235586, 39.713120), 15.0f, 0.0f, 0.0f),
                 new Animation(Animation.Type.SMOOTH, 3), null);
-
-//        traffic = MapKitFactory.getInstance().createTrafficLayer(mapView.getMapWindow());
-//        traffic.setTrafficVisible(true);
 
         mapObjects = mapView.getMap().getMapObjects();
         addWalkPoints();
@@ -74,9 +72,10 @@ public class WalkActivity extends AppCompatActivity {
     }
 
 
+    //добавление собственных маркеров
     private void addWalkPoints() {
         List<Point> walkPoints = databaseHelper.getAllWalkPoints();
-        ImageProvider icon = ImageProvider.fromResource(this, R.drawable.icon);
+        ImageProvider icon = ImageProvider.fromResource(this, R.drawable.marker);
 
         for (Point walkPoint : walkPoints) {
             PlacemarkMapObject viewWalkPoint = mapObjects.addPlacemark(walkPoint);
@@ -85,6 +84,7 @@ public class WalkActivity extends AppCompatActivity {
         }
     }
 
+    //обработчик нажатия на маркер
     private MapObjectTapListener walkPointTapListener = (mapObject, point) -> {
         selectedPoint = point;
         walkRouteListener.findPathToPoint(selectedPoint);
@@ -92,6 +92,7 @@ public class WalkActivity extends AppCompatActivity {
     };
 
 
+    //запрос на местонахождение устройства
     private void requestPermission(){
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
                 ActivityCompat.checkSelfPermission(this,Manifest.permission.ACCESS_COARSE_LOCATION)!= PackageManager.PERMISSION_GRANTED) {

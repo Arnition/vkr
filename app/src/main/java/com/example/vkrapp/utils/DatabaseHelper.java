@@ -20,7 +20,7 @@ import java.util.List;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "database.db";
-    private static final int DATABASE_VERSION = 16;
+    private static final int DATABASE_VERSION = 18;
     private Context context;
     private Cursor cursor;
 
@@ -35,23 +35,26 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         // Не нужно выполнять никаких операций здесь, так как база данных уже скопирована из assets
     }
 
+    //обновление бд
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.close();
         context.deleteDatabase(DATABASE_NAME);
         copyDatabase();
-//        Caused by: java.lang.IllegalStateException: attempt to re-open an already-closed object: SQLiteDatabase: /data/user/0/com.example.vkrapp/databases/database.db
     }
 
+    //чтение строк из бд
     private Cursor getCursorFromSQL(String sql) {
         return this.getReadableDatabase().rawQuery(sql, null);
     }
 
+    //закрытие бд
     private void closeAfterRequest() {
         cursor.close();
         this.close();
     }
 
+    //продвижение курсора по всем записям
     private boolean checkDepend(String sql) {
         boolean response = false;
 
@@ -64,28 +67,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return response;
     }
 
-    public boolean isDependKg(String animalType) {
-        return checkDepend("SELECT kg FROM animals WHERE name = \"" + animalType + "\";");
-    }
-
-    public boolean isDependWeight(String animalType) {
-        return checkDepend("SELECT weight FROM animals WHERE name = \"" + animalType + "\";");
-    }
-
-    public String getAnimalRecommendation(String animalType) {
-        String recommendation = "NULL STR";
-
-        String sql = "SELECT recommendation FROM animals WHERE name = \"" + animalType + "\";";
-        cursor = getCursorFromSQL(sql);
+    //получение животного из бд
+    public List<String> getAllAnimalsType() {
+        List<String> animalsType = new ArrayList<>();
+        cursor = getCursorFromSQL("SELECT * FROM animals");
 
         if (cursor.moveToFirst()) {
-            recommendation = cursor.getString(0);
+            do {
+                int columnIndex = cursor.getColumnIndex("name");
+                animalsType.add(cursor.getString(columnIndex));
+            } while (cursor.moveToNext());
         }
 
         closeAfterRequest();
-        return recommendation;
+        return animalsType;
     }
 
+    //лист для параметров животного
     public List<String> getAnimalParamsByAnimalType(String animalType) {
         List<String> animalParams = new ArrayList<>();
 
@@ -135,7 +133,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-
     public double getAnimalGrams(String animalType, String animalParams) {
         String sql = "SELECT data.grams FROM data ";
         sql += "INNER JOIN animals ON animals.id = data.id_animal ";
@@ -145,22 +142,29 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         return getAnimalCoefficient(sql);
     }
+    public boolean isDependKg(String animalType) {
+        return checkDepend("SELECT kg FROM animals WHERE name = \"" + animalType + "\";");
+    }
 
-    public List<String> getAllAnimalsType() {
-        List<String> animalsType = new ArrayList<>();
-        cursor = getCursorFromSQL("SELECT * FROM animals");
+    public boolean isDependWeight(String animalType) {
+        return checkDepend("SELECT weight FROM animals WHERE name = \"" + animalType + "\";");
+    }
+
+    public String getAnimalRecommendation(String animalType) {
+        String recommendation = "NULL STR";
+
+        String sql = "SELECT recommendation FROM animals WHERE name = \"" + animalType + "\";";
+        cursor = getCursorFromSQL(sql);
 
         if (cursor.moveToFirst()) {
-            do {
-                int columnIndex = cursor.getColumnIndex("name");
-                animalsType.add(cursor.getString(columnIndex));
-            } while (cursor.moveToNext());
+            recommendation = cursor.getString(0);
         }
 
         closeAfterRequest();
-        return animalsType;
+        return recommendation;
     }
 
+    //получение площадок
     public List<Point> getAllWalkPoints() {
         List<Point> walkPoints = new ArrayList<>();
         cursor = getCursorFromSQL("SELECT * FROM walk_points");

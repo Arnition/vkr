@@ -1,5 +1,10 @@
 package com.example.vkrapp.utils;
 
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.example.vkrapp.R;
+
 public class Animal {
 
     private String animal_type;
@@ -38,22 +43,14 @@ public class Animal {
         if(defaultAnimalCoefficient > 0) {
             return weight * defaultAnimalCoefficient;
         }
-
-
 //для кроликов
         if(weight == 0 && kkl == 0 && coefficient == 0 && hasAnimalParams) {
             return grams;
         }
-
 //      попугаии и свинки
         if(weight > 0 && kkl == 0 && coefficient == 0 && hasAnimalParams) {
             return ((weight * grams) / 100);
         }
-
-////      крысы
-//        if(weight > 0  && kkl == 0 && coefficient == 0 && !hasAnimalParams) {
-//            return ((weight * grams) / 100);
-//        }
         //для собак и кошек
         if(this.coefficient != -1) {
             double energy = 30 * this.coefficient + 70;
@@ -63,13 +60,6 @@ public class Animal {
 //            другая формула для животных у который коэф в бд == -1
             result += 1;
         }
-
         return result;
     }
 }
-
-//
-////        декор Кролики
-//        if(weight > 0 && kkl == 0 && coefficient == 0 && !hasAnimalParams) {
-//            return weight * 40;
-//        }

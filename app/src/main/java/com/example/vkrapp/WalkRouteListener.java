@@ -44,8 +44,6 @@ public class WalkRouteListener implements LocationListener, Session.RouteListene
         this.mapObjects = mapObjects;
         this.user_icon = ImageProvider.fromResource(context, R.drawable.user_location_icon);
     }
-
-
 //    Функция вызывается после успешного построения маршрута в функции findPathToPoint
 //    Отрисовываем самый первый маршрут
     @Override
@@ -56,8 +54,6 @@ public class WalkRouteListener implements LocationListener, Session.RouteListene
             }
         }
     }
-
-
 //    Функция вызывается после изменения геопозиции пользователя
     @Override
     public void onLocationUpdated(@NonNull Location location) {
@@ -80,27 +76,26 @@ public class WalkRouteListener implements LocationListener, Session.RouteListene
 
     @Override
     public void onMasstransitRoutesError(@NonNull Error error) {}
-
-//    Функция поиска пути между местоположением пользователя и выбранной точкой
+//    поиска пути между местоположением пользователя и выбранной точкой
     public void findPathToPoint(Point route_end) {
-        selectedPoint = route_end;                      //  Выбранная конечная точка маршрута
+        selectedPoint = route_end;                      //  выбранная конечная точка маршрута
 
-        List<RequestPoint> points = Arrays.asList(      //  Список из точек: Местоположение пользователя и конечная точка
+        List<RequestPoint> points = Arrays.asList(      //  список из точек: Местоположение пользователя и конечная точка
                 new RequestPoint(userLocation, RequestPointType.WAYPOINT, null),
                 new RequestPoint(selectedPoint, RequestPointType.WAYPOINT, null)
         );
 
-        PedestrianRouter pedestrianRouter = TransportFactory.getInstance().createPedestrianRouter();        //  Создаем роут для пешеходов
-        Session session = pedestrianRouter.requestRoutes(points, new TimeOptions(), this);       //  Пытаемся найти маршрут между этими точками
+        PedestrianRouter pedestrianRouter = TransportFactory.getInstance().createPedestrianRouter();        //  создаем роут для пешеходов
+        Session session = pedestrianRouter.requestRoutes(points, new TimeOptions(), this);       //  пытаемся найти маршрут между этими точками
     }
 
-//  Функция для рисования маршрута на карте
+//  для рисования маршрута на карте
     private void drawSection(Polyline geometry) {
-        if(wayViewLine == null) {                               //  Проверям что маршрут еще не рисовался
-            wayViewLine = mapObjects.addPolyline(geometry);     //  Добавляем линию маршрута
-            wayViewLine.setStrokeColor(Color.BLUE);             //  Ставим ей цвет
+        if(wayViewLine == null) {                               //  проверям что маршрут еще не рисовался
+            wayViewLine = mapObjects.addPolyline(geometry);     //  добавляем линию маршрута
+            wayViewLine.setStrokeColor(Color.BLUE);             //  ставим ей цвет
         }else {
-            wayViewLine.setGeometry(geometry);                  //  Если линия рисовалась - меняем ее местоположение
+            wayViewLine.setGeometry(geometry);                  //  если линия рисовалась - меняем ее местоположение
         }
     }
 }
